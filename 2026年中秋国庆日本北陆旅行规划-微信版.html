@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026年中秋国庆日本北陆旅行规划</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 100%; overflow-x: hidden; }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .header h1 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .header .meta { font-size: 14px; opacity: 0.9; }
+        .header .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        
+        /* Section */
+        .section { background: white; margin: 8px 0; padding: 16px; }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+            margin-bottom: 12px;
+        }
+        
+        /* Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .overview-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+        .overview-card .label { font-size: 12px; color: #666; margin-bottom: 4px; }
+        .overview-card .value { font-size: 16px; font-weight: 600; color: #333; }
+        .overview-card .value.yen { color: #e74c3c; }
+        .overview-card .value.rmb { color: #27ae60; }
+        
+        /* Cost Table */
+        .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .cost-table th {
+            background: #667eea;
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 500;
+        }
+        .cost-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .cost-table tr:nth-child(even) { background: #f8f9fa; }
+        .cost-table .total { font-weight: 600; color: #e74c3c; }
+        .cost-table .pass-name { color: #666; }
+        .cost-table .pass-bad { color: #e74c3c; }
+        
+        /* Day Cards */
+        .day-card {
+            background: white;
+            margin: 8px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .day-header h2 { font-size: 16px; font-weight: 600; }
+        .day-header .date { font-size: 13px; opacity: 0.9; }
+        .day-header .arrow { font-size: 14px; transition: transform 0.3s; }
+        .day-card.active .day-header .arrow { transform: rotate(180deg); }
+        .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .day-card.active .day-content {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
+        }
+        .day-inner { padding: 16px; }
+        
+        /* Schedule Table */
+        .schedule-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+        .schedule-table th {
+            background: #f0f0f0;
+            padding: 8px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+            color: #666;
+        }
+        .schedule-table td {
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        .schedule-table .time { color: #667eea; font-weight: 500; white-space: nowrap; }
+        .schedule-table .cost { color: #e74c3c; font-weight: 500; }
+        .schedule-table .free { color: #27ae60; }
+        
+        /* Tips Box */
+        .tips-box {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+        }
+        .tips-box strong { color: #f57c00; }
+        
+        /* Highlight Box */
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+        }
+        
+        /* Warning Box */
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+        }
+        .warning-box strong { color: #c62828; }
+        
+        /* Options */
+        .option { background: #f5f5f5; padding: 12px; margin: 8px 0; border-radius: 8px; }
+        .option-title { font-weight: 600; color: #667eea; margin-bottom: 4px; }
+        .option-desc { font-size: 13px; color: #666; }
+        
+        /* Hotel Info */
+        .hotel-info {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        .hotel-info .hotel-name { font-weight: 600; color: #333; }
+        .hotel-info .hotel-detail { color: #666; margin-top: 4px; }
+        
+        /* Download Buttons */
+        .download-section {
+            background: white;
+            padding: 20px 16px;
+            text-align: center;
+            margin: 8px 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 24px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            margin: 8px;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.3);
+        }
+        .download-btn.secondary {
+            background: #fff;
+            color: #667eea;
+            border: 2px solid #667eea;
+            box-shadow: none;
+        }
+        
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+        .info-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .info-item .label { color: #666; margin-bottom: 4px; }
+        .info-item .value { color: #333; font-weight: 500; }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 24px 16px;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        
+        /* Responsive */
+        @media (max-width: 360px) {
+            .overview-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>2026年中秋国庆日本北陆旅行规划</h1>
+            <div class="meta">9月25日 - 10月3日（9天8晚）</div>
+            <div class="badge">2大3小 | 长野·富山·新潟</div>
+        </div>
+        
+        <!-- Overview -->
+        <div class="section">
+            <div class="section-title">行程总览</div>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <div class="label">主要交通费</div>
+                    <div class="value yen">~175,000日元</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">约合（人民币）</div>
+                    <div class="value rmb">~8,750元</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">景点/缆车</div>
+                    <div class="value yen">~40,000-60,000</div>
+                </div>
+                <div class="overview-card">
+                    <div class="label">全程合计</div>
+                    <div class="value rmb">~1.6-2.0万元</div>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <strong>结论：</strong>单独购票最划算！四种JR Pass均比单独购票贵18,750-84,000日元。因行程横跨9天、大量非JR交通无法覆盖、3个儿童无额外折扣优势。
+            </div>
+        </div>
+        
+        <!-- Daily Cost -->
+        <div class="section">
+            <div class="section-title">每日费用明细（2大3小）</div>
+            <table class="cost-table">
+                <tr><th>日期</th><th>交通</th><th>景点</th><th>餐饮</th><th>当日合计</th></tr>
+                <tr><td>Day1 9/25</td><td>—</td><td>—</td><td>~750-1,000人民币</td><td class="total">~750-1,000人民币</td></tr>
+                <tr><td>Day2 9/26</td><td>42,910</td><td>2,500</td><td>17,500</td><td class="total">62,910</td></tr>
+                <tr><td>Day3 9/27</td><td>—</td><td>12,500-22,500</td><td>17,500</td><td class="total">34,000-47,500</td></tr>
+                <tr><td>Day4 9/28</td><td>8,430</td><td>—</td><td>15,000</td><td class="total">23,430</td></tr>
+                <tr><td>Day5 9/29</td><td>3,500</td><td>—</td><td>17,500</td><td class="total">21,000</td></tr>
+                <tr><td>Day6 9/30</td><td>53,900</td><td>—</td><td>10,000</td><td class="total">67,900-69,900</td></tr>
+                <tr><td>Day7 10/1</td><td>10,500</td><td>—</td><td>17,500</td><td class="total">33,000-38,000</td></tr>
+                <tr><td>Day8 10/2</td><td>46,490-64,490</td><td>0-5,000</td><td>15,000-17,500</td><td class="total">63,990-88,990</td></tr>
+                <tr><td>Day9 10/3</td><td>—</td><td>—</td><td>—</td><td class="total">—</td></tr>
+            </table>
+        </div>
+        
+        <!-- Day 1 -->
+        <div class="day-card active">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 1 · 天津半日游 → 成田</h2>
+                    <div class="date">9月25日 周五</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>费用</th></tr>
+                        <tr><td class="time">10:30-12:00</td><td>天津意式风情区游览</td><td class="free">免费</td></tr>
+                        <tr><td class="time">12:00-13:30</td><td>午餐（4方案可选）</td><td>~50-100元/人</td></tr>
+                        <tr><td class="time">13:30-14:30</td><td>五大道漫步</td><td class="free">免费</td></tr>
+                        <tr><td class="time">14:30</td><td>前往天津滨海机场</td><td>~30-50元</td></tr>
+                        <tr><td class="time">16:35</td><td>航班起飞</td><td>已购</td></tr>
+                        <tr><td class="time">20:55</td><td>航班抵达成田</td><td>—</td></tr>
+                        <tr><td class="time">22:30</td><td>酒店免费接驳巴士</td><td class="free">免费</td></tr>
+                    </table>
+                    <div class="option">
+                        <div class="option-title">方案A：狗不理包子</div>
+                        <div class="option-desc">人均80-100元，百年老字号，传统三鲜包子</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案B：耳朵眼炸糕 + 锅巴菜</div>
+                        <div class="option-desc">人均30-50元，天津三绝街头小吃组合</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案C：煎饼果子</div>
+                        <div class="option-desc">人均15-25元，最具代表性的天津街头美食</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案D：张记包子铺</div>
+                        <div class="option-desc">人均40-60元，本地人推荐，皮薄馅大</div>
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-name">MYSTAYS成田精品酒店</div>
+                        <div class="hotel-detail">免费机场班车15-20分钟一班，一层有24h全家便利店</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 2 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 2 · 成田 → 轻井泽 → 白马村</h2>
+                    <div class="date">9月26日 周六</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">9:30</td><td>出发</td><td>酒店接驳巴士</td><td class="free">免费</td></tr>
+                        <tr><td class="time">10:00</td><td>成田→上野</td><td>京成Skyliner</td><td class="cost">8,820</td></tr>
+                        <tr><td class="time">11:00</td><td>上野→轻井泽</td><td>北陆新干线</td><td class="cost">17,480</td></tr>
+                        <tr><td class="time">12:30</td><td>午餐</td><td>轻井泽站</td><td>7,500</td></tr>
+                        <tr><td class="time">13:30</td><td>云场池/石之教堂</td><td>步行/自行车</td><td>2,500</td></tr>
+                        <tr><td class="time">16:30</td><td>轻井泽→长野</td><td>北陆新干线</td><td class="cost">10,940</td></tr>
+                        <tr><td class="time">17:00</td><td>长野→白马村</td><td>JR大糸线</td><td class="cost">5,670</td></tr>
+                        <tr><td class="time">19:00</td><td>晚餐</td><td>白马村餐厅</td><td>10,000</td></tr>
+                    </table>
+                    <div class="tips-box">
+                        <strong>推荐：</strong>京成Skyliner速度最快（41分钟到上野）。备选成田特快N'EX车厢更宽敞舒适。
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-name">白马全景酒店</div>
+                        <div class="hotel-detail">连续2晚，含早餐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 3 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 3 · 白马村深度游</h2>
+                    <div class="date">9月27日 周日</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">9:30</td><td>出发前往八方池</td><td class="free">免费</td></tr>
+                        <tr><td class="time">10:00-12:30</td><td>八方池游览（缆车+徒步）</td><td class="cost">12,500</td></tr>
+                        <tr><td class="time">12:30</td><td>午餐</td><td>7,500</td></tr>
+                        <tr><td class="time">14:00-17:00</td><td>大出公园/白马岩岳</td><td>0-10,000</td></tr>
+                        <tr><td class="time">17:30</td><td>晚餐</td><td>10,000</td></tr>
+                        <tr><td class="time">晚间</td><td>温泉放松（可选）</td><td>4,000-7,500</td></tr>
+                    </table>
+                    <div class="tips-box">
+                        <strong>建议：</strong>八方池和白马岩岳二选一即可，保持轻松节奏。两条都去较累。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 4 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 4 · 白马村 → 系鱼川 → 富山</h2>
+                    <div class="date">9月28日 周一</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">9:30</td><td>白马村周边散步</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">11:30</td><td>午餐</td><td>白马站附近</td><td>7,500</td></tr>
+                        <tr><td class="time">13:30</td><td>白马→系鱼川</td><td>JR大糸线</td><td class="cost">5,020</td></tr>
+                        <tr><td class="time">15:00-17:30</td><td>系鱼川游览</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">17:30</td><td>晚餐</td><td>系鱼川站附近</td><td>7,500</td></tr>
+                        <tr><td class="time">18:45</td><td>系鱼川→富山</td><td>JR北陆本线</td><td class="cost">3,410</td></tr>
+                    </table>
+                    <div class="tips-box">
+                        <strong>轻松日：</strong>系鱼川是日本海沿岸小城市，以翡翠产地闻名，适合海边悠闲散步。
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-name">富山地铁酒店</div>
+                        <div class="hotel-detail">连续2晚，早餐900日元/人</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 5 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 5 · 富山深度游</h2>
+                    <div class="date">9月29日 周二</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">10:00</td><td>富山→雨晴海岸</td><td>JR冰见线</td><td class="cost">3,500</td></tr>
+                        <tr><td class="time">10:45-12:30</td><td>雨晴海岸游览</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">12:30</td><td>午餐</td><td>雨晴/富山</td><td>7,500</td></tr>
+                        <tr><td class="time">14:00-17:00</td><td>环水公园/富山城址公园</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">17:30</td><td>晚餐</td><td>富山市区</td><td>10,000</td></tr>
+                    </table>
+                    <div class="highlight-box">
+                        <strong>雨晴海岸：</strong>被誉为"世界最美海湾"之一，晴天可见立山连峰倒映在海面。注意冰见线最晚班次约15:30。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 6 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 6 · 立山黑部阿尔卑斯穿越 ⚠️</h2>
+                    <div class="date">9月30日 周三</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <div class="warning-box">
+                        <strong>重要：</strong>大行李箱无法穿越！需提前一天托运至长野（2,000-3,000日元/件），只带小背包装保暖衣物、雨具、水壶。
+                    </div>
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">7:30</td><td>酒店早餐（或便利店饭团）</td><td>—</td><td>含早</td></tr>
+                        <tr><td class="time">8:00</td><td>行李托运</td><td>富山站</td><td>4,000-6,000</td></tr>
+                        <tr><td class="time">8:15</td><td>富山→立山站</td><td>富山地方铁道</td><td class="cost">6,150</td></tr>
+                        <tr><td class="time">10:00</td><td>立山站→美女平</td><td>立山有轨缆车</td><td class="cost">9,200</td></tr>
+                        <tr><td class="time">10:20</td><td>美女平→室堂</td><td>立山高原巴士</td><td class="cost">12,350</td></tr>
+                        <tr><td class="time">11:10</td><td>御库里池游览</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">12:30</td><td>室堂→大观峰</td><td>隧道电气巴士</td><td class="cost">21,950</td></tr>
+                        <tr><td class="time">13:20</td><td>大观峰→黑部平</td><td>高空索道</td><td>含套票</td></tr>
+                        <tr><td class="time">14:00</td><td>黑部平→黑部湖</td><td>有轨缆车</td><td>含套票</td></tr>
+                        <tr><td class="time">15:05</td><td>黑部水库→扇泽</td><td>隧道电气巴士</td><td class="cost">7,850</td></tr>
+                        <tr><td class="time">16:15</td><td>扇泽→长野（直达巴士）</td><td>高速巴士</td><td class="cost">8,750</td></tr>
+                        <tr><td class="time">18:30</td><td>晚餐</td><td>长野站附近</td><td>10,000</td></tr>
+                    </table>
+                    <div class="warning-box">
+                        <strong>注意：</strong>山上气温可能接近0°C，务必携带保暖衣物！全程换乘8种交通工具，约90公里。
+                    </div>
+                    <div class="hotel-info">
+                        <div class="hotel-name">东横INN长野站东口</div>
+                        <div class="hotel-detail">连续2晚，含早餐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 7 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 7 · 户隐神社 → 长野温泉</h2>
+                    <div class="date">10月1日 周四</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">9:30</td><td>出发前往户隐神社</td><td>长野电铁巴士</td><td class="cost">7,500</td></tr>
+                        <tr><td class="time">10:30-12:30</td><td>户隐神社奥社游览</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">12:30</td><td>午餐（荞麦面）</td><td>户隐神社附近</td><td>7,500</td></tr>
+                        <tr><td class="time">13:30-15:00</td><td>户隐神社中社/镜池</td><td>步行</td><td class="free">免费</td></tr>
+                        <tr><td class="time">15:20</td><td>返回长野站</td><td>巴士</td><td class="cost">7,500</td></tr>
+                        <tr><td class="time">17:30-19:30</td><td>温泉体验（可选）</td><td>—</td><td>5,000-10,000</td></tr>
+                        <tr><td class="time">20:00</td><td>晚餐</td><td>长野站附近</td><td>10,000</td></tr>
+                    </table>
+                    <div class="tips-box">
+                        <strong>户隐神社：</strong>奥社参道约40分钟杉树步道，氛围庄严神秘。10月上旬至下旬是红叶最佳观赏期。
+                    </div>
+                    <div class="option">
+                        <div class="option-title">下午三选一（轻松不累）</div>
+                        <div class="option-desc">A. 温泉体验（推荐） | B. 长野站购物 | C. 善光寺</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 8 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 8 · 长野 → 成田（4方案可选）</h2>
+                    <div class="date">10月2日 周五</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <div class="option">
+                        <div class="option-title">方案A：小布施町（栗子之乡）— 推荐</div>
+                        <div class="option-desc">栗子料理、北斋馆、老街漫步。费用约88,990日元</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案B：善光寺</div>
+                        <div class="option-desc">日本三大祈福圣地，佛教文化体验。费用约66,490日元</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案C：上田城（真田幸村之城）</div>
+                        <div class="option-desc">战国历史爱好者首选。费用约84,490日元</div>
+                    </div>
+                    <div class="option">
+                        <div class="option-title">方案D：长野站周边休闲 — 最轻松</div>
+                        <div class="option-desc">MIDORI购物中心、信州特产采购。费用约63,990日元</div>
+                    </div>
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>交通工具</th><th>费用（5人）</th></tr>
+                        <tr><td class="time">14:30</td><td>长野→东京</td><td>北陆新干线</td><td class="cost">28,000</td></tr>
+                        <tr><td class="time">16:30</td><td>东京→成田</td><td>成田特快N'EX</td><td class="cost">10,990</td></tr>
+                        <tr><td class="time">18:30</td><td>晚餐</td><td>成田附近</td><td>10,000</td></tr>
+                    </table>
+                    <div class="hotel-info">
+                        <div class="hotel-name">MYSTAYS成田精品酒店</div>
+                        <div class="hotel-detail">免费接驳巴士</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Day 9 -->
+        <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)">
+                <div>
+                    <h2>Day 9 · 返程</h2>
+                    <div class="date">10月3日 周六</div>
+                </div>
+                <div class="arrow">▼</div>
+            </div>
+            <div class="day-content">
+                <div class="day-inner">
+                    <table class="schedule-table">
+                        <tr><th>时间</th><th>内容</th><th>费用</th></tr>
+                        <tr><td class="time">8:00</td><td>酒店早餐</td><td>含早</td></tr>
+                        <tr><td class="time">10:00</td><td>前往成田机场</td><td class="free">免费接驳</td></tr>
+                        <tr><td class="time">12:55</td><td>航班起飞</td><td>已购</td></tr>
+                        <tr><td class="time">15:35</td><td>抵达天津</td><td>—</td></tr>
+                    </table>
+                    <div class="tips-box">
+                        <strong>提醒：</strong>提前2小时到达机场，注意行李重量限制。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Practical Info -->
+        <div class="section">
+            <div class="section-title">实用信息</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="label">天气与穿衣</div>
+                    <div class="value">9月底-10月初 10-20°C，山区更冷。立山黑部山上可能接近0°C，务必携带保暖衣物。</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">必备物品</div>
+                    <div class="value">护照签证、日元现金（20-30万/5人）、IC卡（Suica/Pasmo）、充电宝、转换插头、舒适步行鞋</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">紧急联系方式</div>
+                    <div class="value">日本报警 110 | 急救/火警 119 | 中国领事保护 +86-10-12308</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">省钱优化</div>
+                    <div class="value">Skyliner往返套票省1,890日元 | Eki-net提前购票享10-30%折扣 | 5人各办IC卡</div>
+                </div>
+                <div class="info-item">
+                    <div class="label">立山黑部开放期</div>
+                    <div class="value">2026年4月15日 - 11月30日。山上天气多变，携带雨具。</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Download -->
+        <div class="download-section">
+            <div class="section-title">下载完整规划文件</div>
+            <p style="color: #666; font-size: 13px; margin-bottom: 16px;">点击下方按钮下载Word文档和Excel表格</p>
+            <a href="https://github.com/user-attachments/files/2026-travel-plan.docx" class="download-btn" onclick="alert('请从聊天记录中下载Word文档附件')">📄 下载Word文档</a>
+            <a href="https://github.com/user-attachments/files/2026-travel-plan.xlsx" class="download-btn secondary" onclick="alert('请从聊天记录中下载Excel表格附件')">📊 下载Excel表格</a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>2026年中秋国庆日本北陆旅行规划</p>
+            <p>2大3小 | 9天8晚 | 祝您旅途愉快！</p>
+        </div>
+    </div>
+    
+    <!-- Scroll to top -->
+    <div class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+    
+    <script>
+        function toggleDay(header) {
+            const card = header.parentElement;
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
